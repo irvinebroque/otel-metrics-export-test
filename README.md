@@ -4,9 +4,9 @@ This project demonstrates how to collect OpenTelemetry metrics from a Cloudflare
 
 It uses just the plain `opentelemetry-js` libraries in userspace code, with a simple exporter that exports via the Node.js Diagnostics Channel standard API. This means you can instrument your code with metrics the way you'd like to, using a standard OTEL library.
 
-- **Main Worker** (`src/index.ts`): Collects OpenTelemetry metrics and publishes them via Node.js `diagnostics_channel`. It uses the vanilla opentelemetry-js library. Nothing fancy.
-- **Tail Worker** (`tail-worker/src/index.ts`): Receives diagnostics channel events and forwards metrics to external observability platforms. Just plug in the sinks that you want from Datadog, Honeycomb, or Workers Analytics Engine
-- **Custom DiagnosticsChannelExporter** (`src/DiagnosticsChannelExporter.ts`): OpenTelemetry-compatible exporter that bridges metrics to the diagnostics channel
+- **Main Worker** ([`src/index.ts`](https://github.com/irvinebroque/otel-metrics-export-test/blob/main/src/index.ts)): Collects OpenTelemetry metrics and publishes them via Node.js `diagnostics_channel`. It uses the vanilla opentelemetry-js library. Nothing fancy.
+- **Tail Worker** ([`tail-worker/src/index.ts`](https://github.com/irvinebroque/otel-metrics-export-test/blob/main/tail-worker/src/index.ts)): Receives diagnostics channel events and forwards metrics to external observability platforms. Just plug in the sinks that you want from Datadog, Honeycomb, or Workers Analytics Engine
+- **Custom DiagnosticsChannelExporter** ([`src/DiagnosticsChannelExporter.ts`](https://github.com/irvinebroque/otel-metrics-export-test/blob/main/src/DiagnosticsChannelExporter.ts)): OpenTelemetry-compatible exporter that bridges metrics to the diagnostics channel
 
 ## Get started
 
