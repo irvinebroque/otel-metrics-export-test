@@ -1,0 +1,14 @@
+{
+  "name": "tail-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-19",
+  "observability": {
+    "enabled": true
+  },
+  "analytics_engine_datasets": [
+    {
+      "binding": "ANALYTICS_ENGINE",
+      "dataset": "metrics"
+    }
+  ]
+}

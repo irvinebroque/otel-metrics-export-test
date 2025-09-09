@@ -14,5 +14,10 @@
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
 		"wrangler": "^4.34.0"
+	},
+	"dependencies": {
+		"@opentelemetry/api": "^1.9.0",
+		"@opentelemetry/exporter-prometheus": "^0.204.0",
+		"@opentelemetry/sdk-metrics": "^2.1.0"
 	}
 }
