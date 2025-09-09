@@ -4,48 +4,22 @@ This project demonstrates how to collect OpenTelemetry metrics from a Cloudflare
 
 It uses just the plain `opentelemetry-js` libraries in userspace code, with a simple exporter that exports via the Node.js Diagnostics Channel standard API. This means you can instrument your code with metrics the way you'd like to, using a standard OTEL library.
 
-## Architecture
-
 - **Main Worker** (`src/index.ts`): Collects OpenTelemetry metrics and publishes them via Node.js `diagnostics_channel`. It uses the vanilla opentelemetry-js library. Nothing fancy.
 - **Tail Worker** (`tail-worker/src/index.ts`): Receives diagnostics channel events and forwards metrics to external observability platforms. Just plug in the sinks that you want from Datadog, Honeycomb, or Workers Analytics Engine
 - **Custom DiagnosticsChannelExporter** (`src/DiagnosticsChannelExporter.ts`): OpenTelemetry-compatible exporter that bridges metrics to the diagnostics channel
 
-## Features
-
--  OpenTelemetry metrics collection (counters, gauges, observables)
--  Custom DiagnosticsChannelExporter for Cloudflare Workers compatibility
--  Tail Worker integration for metrics export
--  Support for Honeycomb and Datadog
--  Local development setup
-
-## Quick Start
+## Get started
 
 ### 1. Install Dependencies
 
 ```bash
-# Install main worker dependencies
 npm install
-
-# Install tail worker dependencies
 cd tail-worker
 npm install
 cd ..
 ```
 
 ### 2. Configure API Keys
-
-You'll need API keys from either Honeycomb or Datadog (or both).
-
-#### For Honeycomb:
-1. Sign up at [honeycomb.io](https://honeycomb.io)
-2. Create a new dataset called "metrics"
-3. Get your API key from the Honeycomb settings
-
-#### For Datadog:
-1. Sign up at [datadoghq.com](https://datadoghq.com)
-2. Get your API key from the Datadog settings
-
-### 3. Set Environment Variables
 
 Create a `.dev.vars` file in the `tail-worker` directory:
 
@@ -73,8 +47,6 @@ npm run dev
 cd tail-worker
 npm run dev
 ```
-
-Wait for both workers to start and show "connected" status.
 
 ### 5. Generate Metrics
 
