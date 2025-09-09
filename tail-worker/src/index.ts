@@ -41,7 +41,7 @@ const tailExporter = new TailExporter({
     },
 });
 
-// Export the tail function explicitly for Cloudflare Workers
+// TODO — why is this necessary? Because it's a class and something in local dev doesn't expect a class but a POJO?
 export default {
     tail: tailExporter.tail.bind(tailExporter)
 };

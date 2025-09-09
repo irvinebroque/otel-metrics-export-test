@@ -37,6 +37,11 @@ export class DiagnosticsChannelExporter extends MetricReader {
     }
   }
 
+  // Flush metrics with ExecutionContext waitUntil
+  public flush(ctx: ExecutionContext): void {
+    ctx.waitUntil(this.forceFlush());
+  }
+
   protected async onForceFlush(): Promise<void> {
     // Collect and publish metrics immediately
     const result = await this.collect();
