@@ -53,10 +53,7 @@ export class DiagnosticsChannelExporter extends MetricReader {
   }
 
   private _publishMetrics(collectionResult: CollectionResult): void {
-    console.log('Publishing metrics, scopeMetrics count:', collectionResult.resourceMetrics?.scopeMetrics?.length || 0);
-    
     for (const scopeMetrics of collectionResult.resourceMetrics?.scopeMetrics || []) {
-      console.log('Processing scope metrics, metric count:', scopeMetrics.metrics.length);
       for (const metricData of scopeMetrics.metrics) {
         console.log('Processing metric:', metricData.descriptor.name, 'dataPoints:', metricData.dataPoints.length);
         this._processMetric(metricData);
@@ -67,40 +64,9 @@ export class DiagnosticsChannelExporter extends MetricReader {
   private _processMetric(metricData: MetricData): void {
     const metricName = this._prefix ? `${this._prefix}${metricData.descriptor.name}` : metricData.descriptor.name;
     
-    console.log('Processing metric with dataPointType:', metricData.dataPointType);
-    
     for (const dataPoint of metricData.dataPoints) {
-      console.log('Processing dataPoint:', {
-        value: dataPoint.value,
-        attributes: dataPoint.attributes
-      });
-      
       const tags = this._attributesToTags(dataPoint.attributes);
-      
-      // Use the MetricData's dataPointType, not the individual dataPoint's
-      switch (metricData.dataPointType) {
-        case DataPointType.SUM:
-          console.log('Publishing SUM metric');
-          this._publishMetric('COUNT', metricName, dataPoint.value as number, tags);
-          break;
-        case DataPointType.GAUGE:
-          console.log('Publishing GAUGE metric');
-          this._publishMetric('GAUGE', metricName, dataPoint.value as number, tags);
-          break;
-        case DataPointType.HISTOGRAM:
-          console.log('Publishing HISTOGRAM metric');
-          // For histograms, publish the sum as a gauge
-          const histogramValue = dataPoint as any;
-          if (histogramValue.sum !== undefined) {
-            this._publishMetric('GAUGE', `${metricName}_sum`, histogramValue.sum, tags);
-          }
-          if (histogramValue.count !== undefined) {
-            this._publishMetric('COUNT', `${metricName}_count`, histogramValue.count, tags);
-          }
-          break;
-        default:
-          console.log('Unknown metricData dataPointType:', metricData.dataPointType);
-      }
+      this._publishMetric('COUNT', metricName, dataPoint.value as number, tags);
     }
   }
 
